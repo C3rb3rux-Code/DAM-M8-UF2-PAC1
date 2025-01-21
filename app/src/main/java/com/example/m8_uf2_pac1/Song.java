@@ -1,14 +1,23 @@
 package com.example.m8_uf2_pac1;
 
-public class Song {
-    private String namePCP;
-    private String timePCP;
+import android.graphics.Bitmap;
 
-    public Song () {
+public class Song {
+    public String pathPCP;
+    public String namePCP;
+    public String timePCP;
+
+    public Song() {
 
     }
 
-    public Song (String songNamePCP, String songTimePCP) {
+    public Song(String songPathPCP, String songNamePCP) {
+        this.pathPCP = songPathPCP;
+        this.namePCP = songNamePCP;
+    }
+
+    public Song(String songPathPCP, String songNamePCP, String songTimePCP) {
+        this.pathPCP = songPathPCP;
         this.namePCP = songNamePCP;
         this.timePCP = songTimePCP;
     }

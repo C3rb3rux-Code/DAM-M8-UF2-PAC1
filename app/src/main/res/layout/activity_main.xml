@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ListView
-            android:id="@+id/listView"
+            android:id="@+id/songListView"
             android:layout_width="408dp"
             android:layout_height="545dp"
             android:background="@color/white"
@@ -51,7 +51,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/listView">
+            app:layout_constraintTop_toBottomOf="@+id/songListView">
 
             <ImageView
                 android:id="@+id/imageView2"
