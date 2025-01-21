@@ -21,6 +21,7 @@
         android:layout_width="416dp"
         android:layout_height="637dp"
         android:layout_marginTop="1dp"
+        android:background="@color/white"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/songImage"
             android:layout_width="321dp"
             android:layout_height="392dp"
             android:layout_marginTop="58dp"
@@ -44,30 +45,33 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            app:layout_constraintTop_toBottomOf="@+id/songImage">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/backButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
+                android:contentDescription="cancion anterior"
                 app:srcCompat="@drawable/angulodoblepequenoderecho" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/pauseButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
+                android:contentDescription="pause"
                 app:srcCompat="@drawable/pausa" />
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/nextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
+                android:contentDescription="next song"
                 app:srcCompat="@drawable/angulodoblepequenoderecho" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
