@@ -3,6 +3,7 @@ package com.example.m8_uf2_pac1;
 import android.graphics.Bitmap;
 
 public class Song {
+    public Bitmap imagePCP;
     public String pathPCP;
     public String namePCP;
     public String timePCP;
@@ -22,19 +23,10 @@ public class Song {
         this.timePCP = songTimePCP;
     }
 
-    public String getNamePCP() {
-        return namePCP;
-    }
-
-    public void setNamePCP(String namePCP) {
-        this.namePCP = namePCP;
-    }
-
-    public String getTimePCP() {
-        return timePCP;
-    }
-
-    public void setTimePCP(String timePCP) {
-        this.timePCP = timePCP;
+    public Song(Bitmap songImagePCP, String songPathPCP, String songNamePCP, String songTimePCP) {
+        this.imagePCP = songImagePCP;
+        this.pathPCP = songPathPCP;
+        this.namePCP = songNamePCP;
+        this.timePCP = songTimePCP;
     }
 }

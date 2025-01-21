@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
