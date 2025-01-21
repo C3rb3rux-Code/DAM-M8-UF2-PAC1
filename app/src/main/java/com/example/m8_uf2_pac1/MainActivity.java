@@ -2,6 +2,9 @@ package com.example.m8_uf2_pac1;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,13 +22,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO};
+    private static final String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO};
     private ActivityResultLauncher<String> requestPermissionLauncher;
-    private ListView songList = findViewById(R.id.songListView);
-    private MediaPlayer mp = new MediaPlayer();
+    private final ListView songList = findViewById(R.id.songListView);
+    private final MediaPlayer mp = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +46,41 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         } else {
-            File downloadFolderPCP = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             ArrayList<Song> songs = new ArrayList<>();
 
-            if (downloadFolderPCP.exists() && downloadFolderPCP.isDirectory()) {
-                for (File file : downloadFolderPCP.listFiles()) {
+            if (downloadFolder.exists() && downloadFolder.isDirectory()) {
+                for (File file : Objects.requireNonNull(downloadFolder.listFiles())) {
                     if (file.getName().endsWith(".mp3")) {
-                        songs.add(new Song(file.getName(), file.getAbsolutePath()));
+
+                        Bitmap imagePCP = null;
+
+                        try {
+                            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                            retriever.setDataSource(file.getAbsolutePath());
+
+                            String titlePCP = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                            String artistPCP = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            String albumPCP = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+                            String durationPCP = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+
+                            byte[] artBytes = retriever.getEmbeddedPicture();
+                            if (artBytes != null) {
+                                imagePCP = BitmapFactory.decodeByteArray(artBytes, 0, artBytes.length);
+                            }
+
+                            songs.add(new Song(imagePCP, file.getAbsolutePath(), durationPCP, titlePCP, artistPCP, albumPCP));
+
+                            retriever.release();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }
+                ListAdapter adapterPCP = new ListAdapter(this, songs);
+                songList.setAdapter(adapterPCP);
             }
-
-            ListAdapter adapterPCP = new ListAdapter(this, songs);
-            songList.setAdapter(adapterPCP);
         }
     }
 }

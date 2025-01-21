@@ -7,6 +7,8 @@ public class Song {
     public String pathPCP;
     public String namePCP;
     public String timePCP;
+    public String artistPCP;
+    public String albumPCP;
 
     public Song() {
 
@@ -23,10 +25,12 @@ public class Song {
         this.timePCP = songTimePCP;
     }
 
-    public Song(Bitmap songImagePCP, String songPathPCP, String songNamePCP, String songTimePCP) {
+    public Song(Bitmap songImagePCP, String songPathPCP, String songNamePCP, String songTimePCP, String songArtistPCP, String songAlbumPCP) {
         this.imagePCP = songImagePCP;
         this.pathPCP = songPathPCP;
         this.namePCP = songNamePCP;
         this.timePCP = songTimePCP;
+        this.artistPCP = songArtistPCP;
+        this.albumPCP = songAlbumPCP;
     }
 }
