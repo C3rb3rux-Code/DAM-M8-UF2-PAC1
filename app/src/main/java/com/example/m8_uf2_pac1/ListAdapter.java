@@ -2,6 +2,7 @@ package com.example.m8_uf2_pac1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,17 +33,18 @@ public class ListAdapter extends ArrayAdapter<Song> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         Song songPCP = getItem(position);
         ViewHolder viewHolderPCP;
 
-        if (convertView != null) {
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_adapter, parent, false);
 
             viewHolderPCP = new ViewHolder();
             viewHolderPCP.imageSongPCP = (ImageView)convertView.findViewById(R.id.songPhoto);
             viewHolderPCP.nameSongPCP = (TextView) convertView.findViewById(R.id.songName);
             viewHolderPCP.timeSongPCP = (TextView)convertView.findViewById(R.id.songTime);
+            viewHolderPCP.layoutPCP = (LinearLayout)convertView.findViewById(R.id.layoutAdapt);
 
             convertView.setTag(viewHolderPCP);
         } else {
@@ -61,12 +63,15 @@ public class ListAdapter extends ArrayAdapter<Song> {
                 intent.putExtra("SongName", songPCP.namePCP);
                 intent.putExtra("SongImage", songPCP.imagePCP);
                 intent.putExtra("SongTime", songPCP.timePCP);
+                getContext().startActivity(intent);
+            } else {
+                Log.e("ListAdapter", "Song object is null");
             }
         });
 
-        viewHolderPCP.startButtonPCP.setOnClickListener(view -> {
+/*        viewHolderPCP.startButtonPCP.setOnClickListener(view -> {
 
-        });
+        });*/
 
         return convertView;
     }

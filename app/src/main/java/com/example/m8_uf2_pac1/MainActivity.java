@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO};
     private ActivityResultLauncher<String> requestPermissionLauncher;
-    private final ListView songList = findViewById(R.id.songListView);
     private final MediaPlayer mp = new MediaPlayer();
 
     @Override
@@ -78,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }
+
+                ListView songList = findViewById(R.id.songListView);
                 ListAdapter adapterPCP = new ListAdapter(this, songs);
                 songList.setAdapter(adapterPCP);
             }
