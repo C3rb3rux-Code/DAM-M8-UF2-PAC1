@@ -58,7 +58,7 @@
                 android:layout_width="103dp"
                 android:layout_height="69dp"
                 android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@drawable/logo" />
 
             <ProgressBar
                 android:id="@+id/progressBar"

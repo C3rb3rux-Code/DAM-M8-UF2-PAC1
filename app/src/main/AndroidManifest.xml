@@ -19,7 +19,7 @@
         android:theme="@style/Theme.M8UF2PAC1"
         tools:targetApi="31">
         <activity
-            android:name=".ReprSong"
+            android:name=".RepSong"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

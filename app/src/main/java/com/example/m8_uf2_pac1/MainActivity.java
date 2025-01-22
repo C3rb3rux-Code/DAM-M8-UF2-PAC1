@@ -68,13 +68,20 @@ public class MainActivity extends AppCompatActivity {
                                 imagePCP = BitmapFactory.decodeByteArray(artBytes, 0, artBytes.length);
                             }
 
-                            songs.add(new Song(imagePCP, file.getAbsolutePath(), durationPCP, titlePCP, artistPCP, albumPCP));
+                            assert durationPCP != null;
+                            int durationToIntPCP = Integer.parseInt(durationPCP);
+
+                            long minutes = (durationToIntPCP / 1000) / 60;
+                            long seconds = (durationToIntPCP / 1000) % 60;
+
+                            String timePCP =  String.format("%02d:%02d", minutes, seconds);
+
+                            songs.add(new Song(imagePCP, file.getAbsolutePath(), titlePCP, timePCP,  artistPCP, albumPCP));
 
                             retriever.release();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
                 }
 
