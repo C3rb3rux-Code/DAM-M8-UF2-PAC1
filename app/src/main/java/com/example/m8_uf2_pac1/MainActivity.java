@@ -45,27 +45,27 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         } else {
-            File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            ArrayList<Song> songs = new ArrayList<>();
+            File downloadFolderPCP = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            ArrayList<Song> songsPCP = new ArrayList<>();
 
-            if (downloadFolder.exists() && downloadFolder.isDirectory()) {
-                for (File file : Objects.requireNonNull(downloadFolder.listFiles())) {
+            if (downloadFolderPCP.exists() && downloadFolderPCP.isDirectory()) {
+                for (File file : Objects.requireNonNull(downloadFolderPCP.listFiles())) {
                     if (file.getName().endsWith(".mp3")) {
 
                         Bitmap imagePCP = null;
 
                         try {
-                            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                            retriever.setDataSource(file.getAbsolutePath());
+                            MediaMetadataRetriever retrieverPCP = new MediaMetadataRetriever();
+                            retrieverPCP.setDataSource(file.getAbsolutePath());
 
-                            String titlePCP = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-                            String artistPCP = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-                            String albumPCP = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-                            String durationPCP = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                            String titlePCP = retrieverPCP.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                            String artistPCP = retrieverPCP.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            String albumPCP = retrieverPCP.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+                            String durationPCP = retrieverPCP.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
 
-                            byte[] artBytes = retriever.getEmbeddedPicture();
-                            if (artBytes != null) {
-                                imagePCP = BitmapFactory.decodeByteArray(artBytes, 0, artBytes.length);
+                            byte[] artBytesPCP = retrieverPCP.getEmbeddedPicture();
+                            if (artBytesPCP != null) {
+                                imagePCP = BitmapFactory.decodeByteArray(artBytesPCP, 0, artBytesPCP.length);
                             }
 
                             assert durationPCP != null;
@@ -76,17 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
                             String timePCP =  String.format("%02d:%02d", minutes, seconds);
 
-                            songs.add(new Song(imagePCP, file.getAbsolutePath(), titlePCP, timePCP,  artistPCP, albumPCP));
+                            songsPCP.add(new Song(imagePCP, file.getAbsolutePath(), titlePCP, timePCP,  artistPCP, albumPCP));
 
-                            retriever.release();
+                            retrieverPCP.release();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-
                 ListView songList = findViewById(R.id.songListView);
-                ListAdapter adapterPCP = new ListAdapter(this, songs);
+                ListAdapter adapterPCP = new ListAdapter(this, songsPCP);
                 songList.setAdapter(adapterPCP);
             }
         }

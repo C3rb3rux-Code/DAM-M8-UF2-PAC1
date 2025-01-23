@@ -24,6 +24,7 @@ public class ListAdapter extends ArrayAdapter<Song> {
 
     MediaPlayer mp = new MediaPlayer();
     private boolean isImage1 = true;
+    boolean isPlaying;
 
     public ListAdapter(Context context, ArrayList<Song> songs) {
         super(context, 0, songs);
@@ -76,6 +77,7 @@ public class ListAdapter extends ArrayAdapter<Song> {
 
         assert songPCP != null;
         File filePCP = new File(songPCP.pathPCP);
+        viewHolderPCP.startButtonPCP.setImageResource(R.drawable.tocar);
 
         viewHolderPCP.startButtonPCP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,17 +89,27 @@ public class ListAdapter extends ArrayAdapter<Song> {
                 }
                 isImage1 = !isImage1;
                 if (filePCP.exists()) {
-                    MediaPlayer mediaPlayer = new MediaPlayer();
-                    mediaPlayer.setAudioAttributes(
+                    if (mp == null) {
+                        mp = new MediaPlayer();
+                    }
+                    mp.setAudioAttributes(
                             new AudioAttributes.Builder()
                                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                                     .setUsage(AudioAttributes.USAGE_MEDIA)
                                     .build()
                     );
+
                     try {
-                        mediaPlayer.setDataSource(filePCP.getAbsolutePath());
-                        mediaPlayer.prepare();
-                        mediaPlayer.start();
+                        if (mp.isPlaying()) {
+                            mp.pause();
+                            isPlaying = false;
+                        } else {
+                            mp.reset();
+                            mp.setDataSource(filePCP.getAbsolutePath());
+                            mp.prepare();
+                            mp.start();
+                            isPlaying = true;
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
