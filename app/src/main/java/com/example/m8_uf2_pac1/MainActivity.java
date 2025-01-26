@@ -28,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -91,15 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ListView songList = findViewById(R.id.songListView);
                 ListAdapter adapterPCP = new ListAdapter(this, songsPCP);
-                songList.setAdapter(adapterPCP);
-                LinearLayout songNow = (LinearLayout)findViewById(R.id.footLayout);
-                ImageView songImageR = (ImageView)findViewById(R.id.rpSong);
-                ProgressBar progressSong = (ProgressBar)findViewById(R.id.progressBarSong);
-                ImageButton playOrPause = (ImageButton)findViewById(R.id.play);
-
-                songNow.setVisibility(View.VISIBLE);
+                songList.setAdapter(adapterPCP);;
             }
         }
     }
-
 }

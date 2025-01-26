@@ -8,10 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.os.Handler;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,12 +20,14 @@ import androidx.annotation.NonNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ListAdapter extends ArrayAdapter<Song> {
 
     MediaPlayer mp = new MediaPlayer();
     private boolean isImage1 = true;
     boolean isPlaying;
+    Handler handler = new Handler();
 
     public ListAdapter(Context context, ArrayList<Song> songs) {
         super(context, 0, songs);
@@ -36,6 +39,7 @@ public class ListAdapter extends ArrayAdapter<Song> {
         TextView timeSongPCP;
         ImageButton startButtonPCP;
         LinearLayout layoutPCP;
+        ProgressBar prSongPCP;
     }
 
     @NonNull
@@ -53,6 +57,7 @@ public class ListAdapter extends ArrayAdapter<Song> {
             viewHolderPCP.timeSongPCP = (TextView)convertView.findViewById(R.id.songTime);
             viewHolderPCP.layoutPCP = (LinearLayout)convertView.findViewById(R.id.layoutAdapt);
             viewHolderPCP.startButtonPCP = (ImageButton)convertView.findViewById(R.id.playButton);
+            viewHolderPCP.prSongPCP = (ProgressBar)convertView.findViewById(R.id.progressBar);
 
             convertView.setTag(viewHolderPCP);
         } else {
@@ -66,18 +71,13 @@ public class ListAdapter extends ArrayAdapter<Song> {
         }
 
         viewHolderPCP.layoutPCP.setOnClickListener(view -> {
-            Intent intent = new Intent(ListAdapter.this.getContext(), RepSong.class);
-            if (songPCP != null) {
-                intent.putExtra("SongName", songPCP.namePCP);
-                //intent.putExtra("SongImage", songPCP.imagePCP);
-                intent.putExtra("SongTime", songPCP.timePCP);
-                getContext().startActivity(intent);
-            }
+
         });
 
         assert songPCP != null;
         File filePCP = new File(songPCP.pathPCP);
         viewHolderPCP.startButtonPCP.setImageResource(R.drawable.tocar);
+        viewHolderPCP.prSongPCP.setMax(mp.getDuration());
 
         viewHolderPCP.startButtonPCP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,14 +99,26 @@ public class ListAdapter extends ArrayAdapter<Song> {
                                     .build()
                     );
                     try {
+                        Runnable updateProgress = null;
                         if (mp.isPlaying()) {
                             mp.pause();
+                            handler.removeCallbacks(updateProgress);
                             isPlaying = false;
                         } else {
                             mp.reset();
                             mp.setDataSource(filePCP.getAbsolutePath());
                             mp.prepare();
                             mp.start();
+                            updateProgress = new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (mp != null && mp.isPlaying()) {
+                                        viewHolderPCP.prSongPCP.setProgress(mp.getCurrentPosition());
+                                        handler.postDelayed(this, 100);
+                                    }
+                                }
+                            };
+                            handler.post(updateProgress);
                             isPlaying = true;
                         }
                     } catch (IOException e) {
