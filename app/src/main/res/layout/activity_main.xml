@@ -28,10 +28,14 @@
 
         <ListView
             android:id="@+id/songListView"
-            android:layout_width="408dp"
+            android:layout_width="0dp"
             android:layout_height="545dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@color/white"
             android:backgroundTint="@color/white"
+            android:divider="@android:color/white"
+            android:dividerHeight="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.666"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,30 +52,32 @@
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/songListView">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/rpSong"
                 android:layout_width="103dp"
                 android:layout_height="69dp"
                 android:layout_weight="1"
                 tools:srcCompat="@drawable/logo" />
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/progressBarSong"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="247dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/play"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@color/white"
                 android:contentDescription="Pause or resume"
                 app:srcCompat="@drawable/pausa" />
         </LinearLayout>

@@ -98,7 +98,6 @@ public class ListAdapter extends ArrayAdapter<Song> {
                                     .setUsage(AudioAttributes.USAGE_MEDIA)
                                     .build()
                     );
-
                     try {
                         if (mp.isPlaying()) {
                             mp.pause();
@@ -118,7 +117,6 @@ public class ListAdapter extends ArrayAdapter<Song> {
                 }
             }
         });
-
         return convertView;
     }
 }

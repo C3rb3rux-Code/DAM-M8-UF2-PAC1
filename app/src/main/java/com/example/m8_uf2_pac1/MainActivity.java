@@ -8,7 +8,12 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (downloadFolderPCP.exists() && downloadFolderPCP.isDirectory()) {
                 for (File file : Objects.requireNonNull(downloadFolderPCP.listFiles())) {
-                    if (file.getName().endsWith(".mp3")) {
+                    if (file.getName().endsWith(".mp3") || file.getName().endsWith(".m4a") ||file.getName().endsWith(".mp4")) {
 
                         Bitmap imagePCP = null;
 
@@ -87,7 +92,14 @@ public class MainActivity extends AppCompatActivity {
                 ListView songList = findViewById(R.id.songListView);
                 ListAdapter adapterPCP = new ListAdapter(this, songsPCP);
                 songList.setAdapter(adapterPCP);
+                LinearLayout songNow = (LinearLayout)findViewById(R.id.footLayout);
+                ImageView songImageR = (ImageView)findViewById(R.id.rpSong);
+                ProgressBar progressSong = (ProgressBar)findViewById(R.id.progressBarSong);
+                ImageButton playOrPause = (ImageButton)findViewById(R.id.play);
+
+                songNow.setVisibility(View.VISIBLE);
             }
         }
     }
+
 }
